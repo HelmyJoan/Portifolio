@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>João da Silva - Contato</title>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <h1 class="site-title">João da Silva</h1>
+            <p class="site-tagline">Desenvolvedor Web Front-end</p>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="sobre.html">Sobre Mim</a></li>
+                    <li><a href="projetos.html">Projetos</a></li>
+                    <li><a href="habilidades.html">Habilidades</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-section contact-section">
+            <h2 class="section-title">Entre em Contato</h2>
+            <div class="content-wrapper">
+                <p class="contact-intro">Ficarei feliz em responder suas perguntas, discutir projetos ou apenas trocar uma ideia. Use o formulário abaixo ou minhas informações de contato.</p>
+
+                <div class="contact-form-container">
+                    <form action="enviar_email.php" method="POST" id="contactForm">
+                        <div class="input-group">
+                            <label for="nome_contato">Nome:</label>
+                            <input type="text" id="nome_contato" name="nome_contato" required>
+                            <span class="error-message" id="nome_contato-error"></span>
+                        </div>
+                        <div class="input-group">
+                            <label for="email_contato">E-mail:</label>
+                            <input type="email" id="email_contato" name="email_contato" required>
+                            <span class="error-message" id="email_contato-error"></span>
+                        </div>
+                        <div class="input-group">
+                            <label for="assunto_contato">Assunto:</label>
+                            <input type="text" id="assunto_contato" name="assunto_contato" required>
+                            <span class="error-message" id="assunto_contato-error"></span>
+                        </div>
+                        <div class="input-group">
+                            <label for="mensagem_contato">Mensagem:</label>
+                            <textarea id="mensagem_contato" name="mensagem_contato" rows="6" required></textarea>
+                            <span class="error-message" id="mensagem_contato-error"></span>
+                        </div>
+                        <button type="submit">Enviar Mensagem</button>
+                    </form>
+                </div>
+
+                <div class="contact-info">
+                    <h3>Ou me encontre em:</h3>
+                    <p><strong>E-mail:</strong> helmygalindo@email.com</p>
+                    <p><strong>Telefone:</strong> (84) 99123-7221</p>
+                    <p><strong>Localização:</strong> Tibau do Sul, RN - Brasil</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Helmy Joan Galindo. Todos os direitos reservados.</p>
+            <div class="social-links">
+                <a href="#" class="social-icon">Facebook</a>
+                <a href="#" class="social-icon">LinkedIn</a>
+                <a href="#" class="social-icon">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contactForm');
+            const inputs = form.querySelectorAll('input[type="text"], input[type="email"], textarea');
+
+            function displayError(elementId, message) {
+                const errorSpan = document.getElementById(elementId + '-error');
+                if (errorSpan) {
+                    errorSpan.textContent = message;
+                }
+            }
+
+            function clearError(elementId) {
+                const errorSpan = document.getElementById(elementId + '-error');
+                if (errorSpan) {
+                    errorSpan.textContent = '';
+                }
+            }
+
+            form.addEventListener('submit', function(event) {
+                let isValid = true;
+                inputs.forEach(input => clearError(input.id));
+
+                inputs.forEach(input => {
+                    if (input.hasAttribute('required') && input.value.trim() === '') {
+                        displayError(input.id, `O campo "${input.previousElementSibling ? input.previousElementSibling.textContent.replace(':', '') : input.id}" é obrigatório.`);
+                        isValid = false;
+                    }
+                });
+
+                // Validação de E-mail
+                const emailInput = document.getElementById('email_contato');
+                if (emailInput && emailInput.value.trim() !== '') {
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(emailInput.value)) {
+                        displayError('email_contato', 'Por favor, insira um e-mail válido.');
+                        isValid = false;
+                    }
+                }
+
+                if (!isValid) {
+                    event.preventDefault(); // Impede o envio do formulário
+                } else {
+                    alert('Formulário enviado com sucesso (apenas simulação)!'); // Apenas para feedback visual
+                    // Você pode adicionar aqui um event.preventDefault() e usar Fetch API para enviar de verdade,
+                    // mas por agora, o formulário tentará enviar para "enviar_email.php" se a validação passar.
+                }
+            });
+        });
+    </script>
+</body>
+</html>
